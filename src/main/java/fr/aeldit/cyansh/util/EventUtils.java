@@ -4,7 +4,6 @@ import net.minecraft.server.network.ServerPlayNetworkHandler;
 import org.jetbrains.annotations.NotNull;
 
 import static fr.aeldit.cyansh.CyanSHCore.HomesObj;
-import static fr.aeldit.cyansh.CyanSHCore.TrustsObj;
 
 public class EventUtils
 {
@@ -21,6 +20,5 @@ public class EventUtils
         String playerName = handler.getPlayer().getName().getString();
 
         HomesObj.renameChangedUsernames(playerUUID, playerName);
-        TrustsObj.renameChangedUsernames(playerUUID, playerName);
     }
 }

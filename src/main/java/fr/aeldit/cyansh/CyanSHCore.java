@@ -1,11 +1,6 @@
 package fr.aeldit.cyansh;
 
-import fr.aeldit.cyanlib.lib.CyanLib;
-import fr.aeldit.cyanlib.lib.CyanLibLanguageUtils;
-import fr.aeldit.cyanlib.lib.config.CyanLibOptionsStorage;
-import fr.aeldit.cyansh.config.CyanLibConfigImpl;
 import fr.aeldit.cyansh.homes.Homes;
-import fr.aeldit.cyansh.homes.Trusts;
 import net.fabricmc.loader.api.FabricLoader;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,11 +19,6 @@ public class CyanSHCore
     public static Path MOD_PATH = FabricLoader.getInstance().getConfigDir().resolve(MODID);
 
     public static final Homes HomesObj = new Homes();
-    public static final Trusts TrustsObj = new Trusts();
-
-    public static CyanLibOptionsStorage CYANSH_OPTS_STORAGE = new CyanLibOptionsStorage(MODID, new CyanLibConfigImpl());
-    public static CyanLibLanguageUtils CYANSH_LANG_UTILS = new CyanLibLanguageUtils(MODID);
-    public static CyanLib CYANSH_LIB_UTILS = new CyanLib(MODID, CYANSH_OPTS_STORAGE, CYANSH_LANG_UTILS);
 
     public static void checkOrCreateHomesDir()
     {

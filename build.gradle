@@ -25,13 +25,6 @@ dependencies {
     modImplementation(fabricApi.module("fabric-key-binding-api-v1", project.fabric_version))
     modImplementation(fabricApi.module("fabric-screen-api-v1", project.fabric_version))
 
-    // ModMenu
-    modImplementation "com.terraformersmc:modmenu:${project.modmenu_version}"
-
-    // CyanLib
-    modImplementation "maven.modrinth:cyanlib:${project.cyanlib_version}"
-    include "maven.modrinth:cyanlib:${project.cyanlib_version}"
-
     // Gson
     implementation "com.google.code.gson:gson:2.10.1"
 }
@@ -68,8 +61,6 @@ modrinth {
 
     dependencies {
         required.version "fabric-api", "$project.fabric_version"
-        embedded.project "cyanlib"
-        required.version "modmenu", "$project.modmenu_version"
     }
 
     changelog = file("changelogs/latest.md").exists() ? file("changelogs/latest.md").getText() : "No changelog provided"

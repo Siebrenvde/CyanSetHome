@@ -19,7 +19,7 @@ import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 
 import static fr.aeldit.cyansh.CyanSHCore.*;
-import static fr.aeldit.cyansh.config.CyanLibConfigImpl.MAX_HOMES;
+import static fr.aeldit.cyansh.config.Config.MAX_HOMES;
 
 public class Homes
 {
@@ -151,45 +151,6 @@ public class Homes
     }
 
     /**
-     * Removes the key:value entry of the player {@code playerName} if it exists
-     *
-     * @return {@code true} on success | {@code false} on failure
-     */
-    public boolean removeAll(String playerKey)
-    {
-        if (homes.containsKey(playerKey))
-        {
-            if (!homes.get(playerKey).isEmpty())
-            {
-                homes.get(playerKey).clear();
-                homes.remove(playerKey);
-                writeHomes(playerKey);
-
-                return true;
-            }
-        }
-        return false;
-    }
-
-    /**
-     * Renames the home of the player
-     *
-     * @return {@code true} on success | {@code false} on failure
-     */
-    public boolean rename(String playerKey, String homeName, String newHomeName)
-    {
-        Home home = getHome(playerKey, homeName);
-        if (home != null)
-        {
-            home.setName(newHomeName);
-            writeHomes(playerKey);
-
-            return true;
-        }
-        return false;
-    }
-
-    /**
      * Can be called if and only if the result of {@link Homes#isEmpty} is false
      *
      * @return An ArrayList containing all the homes of the player {@code playerName}
@@ -197,22 +158,6 @@ public class Homes
     public @Nullable List<Home> getPlayerHomes(String playerName)
     {
         return homes.get(playerName);
-    }
-
-    /**
-     * @return An ArrayList containing the names of all the players that have at least 1 home
-     */
-    public List<String> getPlayersWithHomes(String excludedPlayer)
-    {
-        List<String> list = new ArrayList<>(homes.keySet().size());
-        for (String key : homes.keySet())
-        {
-            if (!key.split(" ")[1].equals(excludedPlayer))
-            {
-                list.add(key.split(" ")[1]);
-            }
-        }
-        return list;
     }
 
     /**
@@ -232,59 +177,9 @@ public class Homes
         return null;
     }
 
-    /**
-     * Can be called only if the player receiving the suggestion is trusted by the player {@code playerName}
-     * (result of {@link Trusts#isPlayerTrustingFromName})
-     *
-     * @return An ArrayList containing all the homes names of the player {@code playerName}
-     */
-    public @Nullable List<String> getHomesNamesOf(String playerName)
-    {
-        for (String key : homes.keySet())
-        {
-            if (key.split(" ")[1].equals(playerName))
-            {
-                List<String> names = new ArrayList<>(homes.get(playerName).size());
-                for (Home home : homes.get(key))
-                {
-                    names.add(home.name);
-                }
-                return names;
-            }
-        }
-        return null;
-    }
-
-    /**
-     * Returns the key associated with the name {@code playerName}
-     */
-    public String getKeyFromName(String playerName)
-    {
-        for (String key : homes.keySet())
-        {
-            if (key.split(" ")[1].equals(playerName))
-            {
-                return key;
-            }
-        }
-        return "";
-    }
-
     public boolean isEmpty(String playerKey)
     {
         return !homes.containsKey(playerKey) || homes.get(playerKey).isEmpty();
-    }
-
-    public boolean isEmptyFromName(String playerName)
-    {
-        for (String s : homes.keySet())
-        {
-            if (s.split(" ")[1].equals(playerName))
-            {
-                return homes.get(s).isEmpty();
-            }
-        }
-        return true;
     }
 
     /**
@@ -296,7 +191,7 @@ public class Homes
      */
     public boolean maxHomesNotReached(String playerKey)
     {
-        return !homes.containsKey(playerKey) || homes.get(playerKey).size() < MAX_HOMES.getValue();
+        return !homes.containsKey(playerKey) || homes.get(playerKey).size() < MAX_HOMES;
     }
 
     /**
@@ -310,28 +205,6 @@ public class Homes
     public boolean homeExists(String playerKey, String homeName)
     {
         return getHome(playerKey, homeName) != null;
-    }
-
-    /**
-     * Checks if a home exists for the player named {@code playerName}
-     */
-    public boolean homeExistsFromName(String playerName, String homeName)
-    {
-        for (String key : homes.keySet())
-        {
-            if (key.split(" ")[1].equals(playerName))
-            {
-                for (Home home : homes.get(key))
-                {
-                    if (home.name.equals(homeName))
-                    {
-                        return true;
-                    }
-                }
-                break;
-            }
-        }
-        return false;
     }
 
     /**
@@ -433,43 +306,6 @@ public class Homes
                     catch (IOException e)
                     {
                         throw new RuntimeException(e);
-                    }
-                }
-            }
-        }
-    }
-
-    /**
-     * Directory (client) : minecraft/config/cyansh/save_name
-     */
-    public void readClient(String saveName)
-    {
-        HOMES_PATH = Path.of(MOD_PATH + "/" + saveName);
-        checkOrCreateHomesDir();
-        File[] listOfFiles = new File(HOMES_PATH.toUri()).listFiles();
-
-        if (listOfFiles != null)
-        {
-            for (File file : listOfFiles)
-            {
-                if (file.isFile())
-                {
-                    if (!file.getName().equals("trusted_players.json"))
-                    {
-                        try
-                        {
-                            Gson gsonReader = new Gson();
-                            Reader reader = Files.newBufferedReader(file.toPath());
-                            // TODO -> Don't use \\.
-                            addPlayerHomes(
-                                    file.getName().split("\\.")[0], Collections.synchronizedList(
-                                            new ArrayList<>(gsonReader.fromJson(reader, homesType))));
-                            reader.close();
-                        }
-                        catch (IOException e)
-                        {
-                            throw new RuntimeException(e);
-                        }
                     }
                 }
             }

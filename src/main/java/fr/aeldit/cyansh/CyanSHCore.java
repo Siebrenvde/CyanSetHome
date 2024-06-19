@@ -1,6 +1,7 @@
 package fr.aeldit.cyansh;
 
 import fr.aeldit.cyansh.homes.Homes;
+import fr.aeldit.cyansh.warps.Warps;
 import net.fabricmc.loader.api.FabricLoader;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,6 +20,7 @@ public class CyanSHCore
     public static Path MOD_PATH = FabricLoader.getInstance().getConfigDir().resolve(MODID);
 
     public static final Homes HomesObj = new Homes();
+    public static final Warps WarpsObj = new Warps();
 
     public static void checkOrCreateHomesDir()
     {

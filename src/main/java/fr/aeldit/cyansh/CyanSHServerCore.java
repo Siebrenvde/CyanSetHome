@@ -1,6 +1,7 @@
 package fr.aeldit.cyansh;
 
 import fr.aeldit.cyansh.commands.HomeCommands;
+import fr.aeldit.cyansh.commands.WarpCommands;
 import net.fabricmc.api.DedicatedServerModInitializer;
 import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
@@ -20,6 +21,7 @@ public class CyanSHServerCore implements DedicatedServerModInitializer
 
         CommandRegistrationCallback.EVENT.register((dispatcher, dedicated, environment) -> {
             HomeCommands.register(dispatcher);
+            WarpCommands.register(dispatcher);
         });
 
         ServerLifecycleEvents.SERVER_STOPPED.register(server -> removeEmptyModDir());

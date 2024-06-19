@@ -16,6 +16,7 @@ public class CyanSHServerCore implements DedicatedServerModInitializer
     public void onInitializeServer()
     {
         HomesObj.readServer();
+        WarpsObj.readServer();
 
         ServerPlayConnectionEvents.JOIN.register((handler, sender, server) -> renameFileIfUsernameChanged(handler));
 

@@ -26,7 +26,6 @@ public class Warps {
     private List<Warp> warps = new ArrayList<>();
     private final TypeToken<List<Warp>> warpsTypeToken = new TypeToken<>(){};
     public static Path WARPS_PATH = Path.of("%s/warps.json".formatted(MOD_PATH));
-    private boolean isEditing = false;
 
     public boolean addWarp(@NotNull Warp warp) {
         if(warpExists(warp.name())) { return false; }

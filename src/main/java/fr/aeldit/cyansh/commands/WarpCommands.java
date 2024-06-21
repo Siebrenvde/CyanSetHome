@@ -103,7 +103,7 @@ public class WarpCommands {
         RegistryKey<World> world = switch (warp.dimension()) {
             default -> World.OVERWORLD;
             case "nether" -> World.NETHER;
-            case "the_end" -> World.END;
+            case "end" -> World.END;
         };
 
         player.teleport(server.getWorld(world), warp.x(), warp.y(), warp.z(), warp.yaw(), warp.pitch());

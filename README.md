@@ -1,3 +1,15 @@
+This is a personalised fork used on our server as a replacement for Essentials while we were waiting for Paper to update to 1.21
+
+Changes:
+- Removed CyanLib and ModMenu dependencies
+- Removed any client-side code
+- Removed configuration in favour of hard-coded configuration
+- Removed trust system and related commands
+- Renamed home commands to match Essentials
+- Restyled home commands' feedback to match Essentials
+- Added warp commands
+- Accidentally introduce a lot of CRLF line endings (whoops)
+
 ![banner](https://github.com/Aeldit/Aeldit/blob/main/banners/cyansh.png?raw=true)
 <!-- modrinth_exclude.start -->
 > ❌ I do NOT allow this mod to be ported on the Forge loader, nor to be uploaded on Curseforge
